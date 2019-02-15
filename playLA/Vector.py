@@ -28,6 +28,11 @@ class Vector:
     def __str__(self):
         return "({})".format(','.join(str(e) for e in self._values))
 
+    def dot(self, other):
+        assert len(other) == len(self), \
+            "两个向量不一致"
+        return sum(a * b for a, b in zip(self, other))
+
     def __getitem__(self, item):
         return self._values[item]
 

@@ -18,4 +18,6 @@ if __name__ == '__main__':
     print(zero2)
 
     print(vector.norm())
-    print(zero2.normalize().norm())
+    print(vector2.normalize().norm())
+
+    print(vector.dot(vector2))
