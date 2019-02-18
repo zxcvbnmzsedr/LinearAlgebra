@@ -35,3 +35,39 @@ class Matrix:
 
     def cell_vector(self, index):
         return Vector(row[index] for row in self._values)
+
+    def __add__(self, other):
+        assert self.shape() == other.shape(), \
+            "ERROR ADD ,Shape Of matrix must be same"
+        return Matrix([a + b for a, b in zip(self.row_vector(i),
+                                             other.row_vector(i))]
+                      for i in range(self.row_num()))
+
+    def __sub__(self, other):
+        assert self.shape() == other.shape(), \
+            "ERROR SUB ,Shape Of matrix must be same"
+        return Matrix([a - b for a, b in zip(self.row_vector(i),
+                                             other.row_vector(i))]
+                      for i in range(self.row_num()))
+
+    def __mul__(self, k):
+        return Matrix([[k * b for b in self.row_vector(i)]
+                       for i in range(self.row_num())])
+
+    def __rmul__(self, other):
+        return self * other
+
+    def __truediv__(self, other):
+        return (1 / other) * self
+
+    def __pos__(self):
+        return 1 * self
+
+    def __neg__(self):
+        return -1 * self
+
+    @classmethod
+    def zero(cls, r, c):
+        """r行c列的0矩阵"""
+
+        return cls([[0] * c for _ in range(r)])
