@@ -27,13 +27,13 @@ class Matrix:
 
     __len__ = row_num
 
-    def cell_num(self):
+    def coll_num(self):
         return self.shape()[1]
 
     def row_vector(self, index):
         return Vector(self._values[index])
 
-    def cell_vector(self, index):
+    def coll_vector(self, index):
         return Vector(row[index] for row in self._values)
 
     def __add__(self, other):
@@ -71,3 +71,10 @@ class Matrix:
         """r行c列的0矩阵"""
 
         return cls([[0] * c for _ in range(r)])
+
+    def dot(self, another):
+        if isinstance(another, Vector):
+            return Vector([self.row_vector(i).dot(another) for i in range(self.row_num())])
+        if isinstance(another, Matrix):
+            return Matrix([[self.row_vector(i).dot(another.coll_vector(j)) for j in range(another.coll_num())]
+                           for i in range(self.row_num())])
